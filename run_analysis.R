@@ -26,52 +26,51 @@ mean_features <- grep('mean()', features[,2])
 headers <- features[,2]
 
 
-#Step 2a: READING DATA FROM TEST AND TRAINING SETS
+#Step 2: READING DATA FROM TEST AND TRAINING SETS
 X_test <- read.table(".\\test\\X_test.txt")
 X_train <- read.table(".\\train\\X_train.txt")
 names(X_test) <- headers
 names(X_train) <- headers
 
 
-#Step 2b: SUBSETTING STANDARD DEVIATION AND MEAN FEATURES
+#Step 3 SUBSET STANDARD DEVIATION AND MEAN FEATURES
 std_X_test <- X_test[,std_features]
 mean_X_test <- X_test[,mean_features]
 
-#step 2c: ADDING ACTIVITY ROW NAMES
+#step 4: ADDING ACTIVITY ROW NAMES TO TEST DATA
 activity_labels <- read.table("activity_labels.txt", header=F, as.is=T, col.names=c("ActivityID", "ActivityName"))
 activity_labels$ActivityName <- as.factor(activity_labels$ActivityName)
 std_data_labeled <- merge(activity_labels, std_X_test)
-
-#Step 2d: Combine into one X testing data set
 X_test_cdata <- cbind(std_data_labeled, mean_X_test)
 
-#Step 2e: ADDING ACTIVITY ROW NAMES TO TRAINING DATA
+#Step 5: ADDING ACTIVITY ROW NAMES TO TRAINING DATA
 std_X_train <- X_train[,std_features]
 mean_X_train <- X_train[,mean_features]
 std_data_labeled_train <- merge(activity_labels, std_X_train)
 X_train_cdata <- cbind(std_data_labeled_train, mean_X_train)
 
-#Step 2f: Combine the test and trainng data
+#Step 6: COMBINING THE TEST AND TRAIN DATA SETS
 dataset <- rbind(X_test_cdata, X_train_cdata)
 
-#Step 2g: Capitalize Mean in Column names
+#Step 7: CAPITALIZING "M" IN "mean" TO MAKE THE COLUMNS MORE READABLE
 cname <- colnames(dataset)
 a <- sub("mean", "Mean", names(dataset),)
 colnames(dataset) <- a
 
-#Step 2h: Capitalize STD in Coulumn names
+#Step 8: CAPITALIZING "STD" TO MAKE THE COLUMNS MORE READABLE
 cname <- colnames(dataset)
 a <- sub("std", "STD", names(dataset),)
 colnames(dataset) <- a
 
-#Step 2i: Add SubjectID column
+#Step 9: ADDING "SubjectID" IDENTIFIERS TO DATA. 
 SubjectID <- rep(1:nrow(dataset), each=6)
 dataset <- cbind(SubjectID, dataset)
 
-
+#Step 10: TAKING MEAN AND STANDARD DEVIATION OF THE DATASET 
 mean_dataset <- sapply(dataset[,4:ncol(dataset)], mean, na.rm=TRUE)
-std_dataset <- sapply(dataset[,4:ncol(dataset)], sd, na.rm=TRUE)
 
-write.table(scrum[2:180,], "tidy_data.txt", row.names=FALSE)
-write.xlsx(scrum[2:180,], "tidy_data.xlsx", row.names=FALSE)
-
+#Step 11: EXPORITNG A SNIPPET OF THE DATASET TO A TXT FILE AND EXCEL FILE.  
+write.table(dataset[2:180,], "tidy_data.txt", row.names=FALSE)
+write.xlsx(dataset[2:180,], "tidy_data.xlsx", row.names=FALSE)
+write.table(mean_dataset, "tidy_average.txt", row.names=FALSE)
+write.xlsx(mean_dataset, "tidy_average.xlsx", row.names=FALSE)
