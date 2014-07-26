@@ -1,70 +1,40 @@
-==================================================================
-Human Activity Recognition Using Smartphones Dataset
-Version 1.0
-==================================================================
-Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
-Smartlab - Non Linear Complex Systems Laboratory
-DITEN - Università degli Studi di Genova.
-Via Opera Pia 11A, I-16145, Genoa, Italy.
-activityrecognition@smartlab.ws
-www.smartlab.ws
-==================================================================
 
-The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+Transformation details
 
-The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. See 'features_info.txt' for more details. 
+REQUIREMENTS
 
-For each record it is provided:
-======================================
+Libraries: Require data.table and xlsx ibraries.
 
-- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
-- Triaxial Angular velocity from the gyroscope. 
-- A 561-feature vector with time and frequency domain variables. 
-- Its activity label. 
-- An identifier of the subject who carried out the experiment.
+Input Files:
 
-The dataset includes the following files:
-=========================================
+'features.txt': List of all features.
+'activity_labels.txt': Links the class labels with their activity name.
+'train/X_train.txt': Training set.
+'test/X_test.txt': Test set.
+OVERVIEW We want to obtain a dataset that contains the mean and standard deviations for all the measurements. Unfortunately, the raw datasets we are given do not provide a straightforward representation. The compnents of the data we want are distributed in 4 files. "features.txt" contains the name of the features measured. "activity_labels.txt" contains the names of the activities the subjects were doing when they were being measured.
 
-- 'README.txt'
+"run_analysis.r" loads both testing and training data. It extracts the mean and standard deviation column names and data. It extracts the features aand makes them column headers. It extracts the activity labels and makes them row names identifying the activites measured.
 
-- 'features_info.txt': Shows information about the variables used on the feature vector.
+There are 11 steps:
 
-- 'features.txt': List of all features.
+GET THE COLUMN INDEXES OF ALL FEATURE MEANS & STANDARD DEVIATIONS.
+READING DATA FROM TEST AND TRAINING SETS
+SUBSET STANDARD DEVIATION AND MEAN FEATURES.
+ADDING ACTIVITY ROW NAMES TO TEST DATA
+ADDING ACTIVITY ROW NAMES TO TRAINING DATA
+COMBINING THE TEST AND TRAIN DATA SETS
+CAPITALIZING "M" IN "mean" TO MAKE THE COLUMNS MORE READABLE
+CAPITALIZING "STD" TO MAKE THE COLUMNS MORE READABLE
+ADDING "SubjectID" IDENTIFIERS TO DATA.
+TAKING MEAN AND STANDARD DEVIATION OF THE DATASET
+EXPORITNG A SNIPPET OF THE DATASET TO A TXT FILE AND EXCEL FILE.
 
-- 'activity_labels.txt': Links the class labels with their activity name.
+USAGE
 
-- 'train/X_train.txt': Training set.
+Download the data source and put into a folder on your local drive. You'll have a UCI HAR Dataset folder. Put run_analysis.R in the parent folder of UCI HAR Dataset, then set it as your working directory using setwd() function in RStudio.
 
-- 'train/y_train.txt': Training labels.
+Run source("xlsx"). (if you cannot load this lackage for some reason, comment out one 74 and line 76 in run_analysis.r.
+Run source("run_analysis.R"), then it will generate a new file tiny_data.txt in your working directory.
+Although not required by the assignment, it also outputs tiny_data.xlsx to present a more readable version of tiny_data.txt. Also, because for computing restraints, and por upload speeds on my network, tidy_data.txt only contains the measurements for the 1st 30 participants of the study.
 
-- 'test/X_test.txt': Test set.
-
-- 'test/y_test.txt': Test labels.
-
-The following files are available for the train and test data. Their descriptions are equivalent. 
-
-- 'train/subject_train.txt': Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
-
-- 'train/Inertial Signals/total_acc_x_train.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
-
-- 'train/Inertial Signals/body_acc_x_train.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
-
-- 'train/Inertial Signals/body_gyro_x_train.txt': The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
-
-Notes: 
-======
-- Features are normalized and bounded within [-1,1].
-- Each feature vector is a row on the text file.
-
-For more information about this dataset contact: activityrecognition@smartlab.ws
-
-License:
-========
-Use of this dataset in publications must be acknowledged by referencing the following publication [1] 
-
-[1] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
-
-This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
-
-Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
+"run_analysis.r" also outputs tidy_average.txt and tidy_average.xlsx. This way that data requested by the assignment can be examined more thoroughly in a file, instead of on the command line.
