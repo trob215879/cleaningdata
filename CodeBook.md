@@ -44,21 +44,39 @@ Although not required by the assignment, it also outputs tiny_data.xlsx to prese
 "run_analysis.r" also outputs tidy_average.txt and tidy_average.xlsx.  This way that data requested by the assignment can be examined more thoroughly in a file, instead of on the command line.
 
 VARIABLE NAMES
+
 features:  Holds all the values of featrues.txt.
+
 std_featrues:  Holds the values of the features corresponding to the standard deviation.
+
 mean_featrues:  Holds the values of the features corresponding to the mean.
+
 headers:  Holds the names of the features without the indexes.
+
 X_test:  Holds values contained in ".\test\X_test.txt"
+
 X_train:  Holds values contained in ".\test\X_train.txt"
+
 activity_labels: Holds the values of activity_labels.txt 
+
 std_data_labeled:  Merges the data with STD data
+
 X_test_cdata:  Holds merged test data
+
 std_X_train:  Holds X_train standard deviation values
+
 mean_X_train:  Holds X_train mean values
+
 std_data_labeled_train:  Holds  X_train standard deviation values and with actvitiy lables
+
 X_train_cdata:  Hold completed T_train tidy dataset
+
 dataset:  Combines completed X_train and X_test datasets
+
 cname:  Holds column names
+
 a: Temporary variable used to store valuses to change column names
+
 SubjectID:  contains numerical subject ids for both datasets.  We had to generate this because it was not provided.
+
 mean_dataset:  vector containing the means of all values in a dataset.
